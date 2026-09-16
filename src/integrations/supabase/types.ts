@@ -14,7 +14,286 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          description: string
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          description?: string
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          description?: string
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      causes: {
+        Row: {
+          description: string
+          id: string
+          issue_id: string
+          title: string
+        }
+        Insert: {
+          description?: string
+          id?: string
+          issue_id: string
+          title: string
+        }
+        Update: {
+          description?: string
+          id?: string
+          issue_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "causes_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      impacts: {
+        Row: {
+          description: string
+          id: string
+          issue_id: string
+          title: string
+        }
+        Insert: {
+          description?: string
+          id?: string
+          issue_id: string
+          title: string
+        }
+        Update: {
+          description?: string
+          id?: string
+          issue_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "impacts_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      indicators: {
+        Row: {
+          description: string
+          id: string
+          issue_id: string
+          name: string
+          unit: string | null
+          value: string | null
+          year: number | null
+        }
+        Insert: {
+          description?: string
+          id?: string
+          issue_id: string
+          name: string
+          unit?: string | null
+          value?: string | null
+          year?: number | null
+        }
+        Update: {
+          description?: string
+          id?: string
+          issue_id?: string
+          name?: string
+          unit?: string | null
+          value?: string | null
+          year?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "indicators_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      issues: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string
+          id: string
+          location_id: string
+          severity: Database["public"]["Enums"]["severity_level"]
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string
+          id?: string
+          location_id: string
+          severity?: Database["public"]["Enums"]["severity_level"]
+          summary?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string
+          id?: string
+          location_id?: string
+          severity?: Database["public"]["Enums"]["severity_level"]
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issues_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "issues_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      locations: {
+        Row: {
+          country: string
+          country_code: string
+          created_at: string
+          featured: boolean
+          id: string
+          latitude: number
+          longitude: number
+          name: string
+          summary: string
+          type: Database["public"]["Enums"]["location_type"]
+          updated_at: string
+        }
+        Insert: {
+          country: string
+          country_code: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          latitude: number
+          longitude: number
+          name: string
+          summary?: string
+          type?: Database["public"]["Enums"]["location_type"]
+          updated_at?: string
+        }
+        Update: {
+          country?: string
+          country_code?: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          latitude?: number
+          longitude?: number
+          name?: string
+          summary?: string
+          type?: Database["public"]["Enums"]["location_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      solutions: {
+        Row: {
+          description: string
+          expected_impact: string
+          id: string
+          issue_id: string
+          title: string
+        }
+        Insert: {
+          description?: string
+          expected_impact?: string
+          id?: string
+          issue_id: string
+          title: string
+        }
+        Update: {
+          description?: string
+          expected_impact?: string
+          id?: string
+          issue_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "solutions_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sources: {
+        Row: {
+          accessed_date: string | null
+          id: string
+          issue_id: string
+          organization: string
+          publication_date: string | null
+          title: string
+          url: string | null
+        }
+        Insert: {
+          accessed_date?: string | null
+          id?: string
+          issue_id: string
+          organization: string
+          publication_date?: string | null
+          title: string
+          url?: string | null
+        }
+        Update: {
+          accessed_date?: string | null
+          id?: string
+          issue_id?: string
+          organization?: string
+          publication_date?: string | null
+          title?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sources_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +302,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      location_type: "country" | "city" | "region" | "global"
+      severity_level: "low" | "moderate" | "high" | "critical"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +430,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      location_type: ["country", "city", "region", "global"],
+      severity_level: ["low", "moderate", "high", "critical"],
+    },
   },
 } as const
